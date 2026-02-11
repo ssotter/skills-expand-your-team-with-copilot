@@ -650,7 +650,7 @@ footer {
 #user-controls {
   position: absolute;
   top: 10px;
-  right: 15px;
+  right: calc(15px + 60px);
 }
 
 #user-status {
@@ -715,13 +715,9 @@ footer {
   display: flex;
   align-items: center;
   gap: 5px;
+  z-index: 1;
 }
 
 #theme-toggle:hover {
   background-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Adjust user controls positioning when theme toggle is present */
-body:has(#theme-toggle) #user-controls {
-  right: 100px;
 }

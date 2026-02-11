@@ -53,10 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listener for theme toggle
-  themeToggle.addEventListener("click", toggleDarkMode);
-
-  // Initialize dark mode on page load
-  initializeDarkMode();
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleDarkMode);
+    // Initialize dark mode on page load
+    initializeDarkMode();
+  }
 
   // Activity categories with corresponding colors
   const activityTypes = {
