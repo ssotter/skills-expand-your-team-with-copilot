@@ -867,12 +867,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const emailBody = encodeURIComponent(
           `${shareText}\n\nLearn more: ${shareUrl}`
         );
-        window.location.href = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+        window.open(`mailto:?subject=${emailSubject}&body=${emailBody}`);
         break;
     }
-
-    // Show feedback message
-    showMessage(`Sharing ${activityName} on ${platform}!`, "info");
   }
 
   // Handle form submission
