@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryFilters = document.querySelectorAll(".category-filter");
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
+  const difficultyFilters = document.querySelectorAll(".difficulty-filter");
 
   // Authentication elements
   const loginButton = document.getElementById("login-button");
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchQuery = "";
   let currentDay = "";
   let currentTimeRange = "";
+  let currentDifficulty = "";
 
   // Authentication state
   let currentUser = null;
@@ -451,6 +453,24 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Apply difficulty filter
+      // currentDifficulty can be:
+      // - "" (empty): No difficulty filter applied - show all activities
+      // - "all": Show only activities with no difficulty specified (suitable for all levels)
+      // - "Beginner"/"Intermediate"/"Advanced": Show only activities with that specific difficulty
+      if (currentDifficulty === "all") {
+        // "All Levels" selected - only show activities with NO difficulty specified
+        if (details.difficulty) {
+          return;
+        }
+      } else if (currentDifficulty) {
+        // Specific difficulty selected - only show activities with that exact difficulty
+        if (details.difficulty !== currentDifficulty) {
+          return;
+        }
+      }
+      // If currentDifficulty is empty string, no filtering is applied
+
       // Activity passed all filters, add to filtered list
       filteredActivities[name] = details;
     });
@@ -658,6 +678,19 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update current time filter and fetch activities
       currentTimeRange = button.dataset.time;
       fetchActivities();
+    });
+  });
+
+  // Add event listeners for difficulty filter buttons
+  difficultyFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      // Update active class
+      difficultyFilters.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      // Update current difficulty filter and display filtered activities
+      currentDifficulty = button.dataset.difficulty;
+      displayFilteredActivities();
     });
   });
 
